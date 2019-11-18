@@ -1,25 +1,30 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { PokeModule } from '../poke.module';
-import { Pokemon } from '../models/pokemon';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokeService {
-  private pokemonsSubject: BehaviorSubject<Pokemon[]>;
 
-  constructor() {
-    this.pokemonsSubject = new BehaviorSubject<Pokemon[]>([]);
+  constructor(private httpClient: HttpClient) {
   }
 
-  add(pokemon: Pokemon): void {
-    const currentList = this.pokemonsSubject.getValue();
-
-    this.pokemonsSubject.next([...currentList, pokemon]);
+  get regions$(): Observable<any> {
+    return this.httpClient.get<any>(`${environment.base_uri}pokedex`).pipe(map(pokedexes => pokedexes.results));
+  }
+  getPokemons$(region: string): Observable<any> {
+    return this.httpClient.get<any>(`${environment.base_uri}pokedex/${region}`)
+    .pipe(
+      map(region => {
+        return { names: region.names, entries: region.pokemon_entries}
+      })
+    );
   }
 
-  get pokemons(): Observable<Pokemon[]> {
-    return this.pokemonsSubject.asObservable();
+  getPokemon$(id: number): Observable<any> {
+    return this.httpClient.get<any>(`${environment.base_uri}pokemon/${id}`);
   }
 }

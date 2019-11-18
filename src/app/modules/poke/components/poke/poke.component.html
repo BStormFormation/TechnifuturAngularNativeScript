@@ -1,5 +1,7 @@
 <div>
-  HEADER
+  <ul>
+    <li *ngFor="let region of regions$|async"><a [routerLink]="['/pokemon', region.name, 'list']">{{ region.name }}</a></li>
+  </ul>
 </div>
 <div>
   <router-outlet></router-outlet>

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PokeService } from 'src/app/modules/poke/services/poke.service';
-import { Pokemon } from 'src/app/modules/poke/models/pokemon';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +8,9 @@ import { Pokemon } from 'src/app/modules/poke/models/pokemon';
 export class AppComponent implements OnInit {
   title = 'TechniFutur';
 
-  constructor(private pokeService: PokeService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.pokeService.add({num: 1, nom: 'Bulbizarre'} as Pokemon);
   }
 }
