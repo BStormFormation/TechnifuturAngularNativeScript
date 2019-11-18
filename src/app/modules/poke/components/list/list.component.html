@@ -1,0 +1,15 @@
+<poke-add (addPokemon)="addPokemon($event)"></poke-add>
+<table>
+  <thead>
+    <tr>
+      <th>Numero</th>
+      <th>Nom</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pokemon of pokemons$|async">
+      <td>{{ pokemon.num }}</td>
+      <td>{{ pokemon.nom }}</td>
+    </tr>
+  </tbody>
+</table>
